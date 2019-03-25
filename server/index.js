@@ -1,20 +1,15 @@
 const path = require('path');
+require('dotenv').config({path : path.join(__dirname, '.env')});
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const axios = require('axios');
 const massive = require('massive');
 
-require('dotenv').config({path : path.join(__dirname, '.env')});
-
-const controller = require('./controller');
 const app = express();
-
 let dbPromise;
+const controller = require('./controller');
 
-app.use(cors());
-app.use(bodyParser.json());
-
+//Middleware
 function useDb() {
     return function useDbMiddleware(req, res, next) {
         if (!dbPromise) {
@@ -39,6 +34,16 @@ function getDb() {
     return massive(process.env.DB_CONNECTION_STRING, { scripts: path.join(__dirname, 'db')});
 }
 
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(useDb());
+
+
+//Endpoints
+app.get('/api/properties', controller.getAll );
+app.post('/api/property', controller.create );
+app.delete('/api/property/:id', controller.delete);
 
 
 app.listen(4000, () => {

@@ -1,74 +1,29 @@
 import React, { Component } from 'react';
+import { Link, Route, Switch } from 'react-router-dom';
+
+import StepOne from '../StepOne/StepOne';
+import StepTwo from '../StepTwo/StepTwo';
+import StepThree from '../StepThree/StepThree';
 
 export default class Wizard extends Component {
     constructor() {
         super()
-
-        this.state = {
-            name: '',
-            address: '',
-            city: '',
-            state: '',
-            zipcode: '',
-        }
-
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.handleAddressChange = this.handleAddressChange.bind(this);
-        this.handleCityChange = this.handleCityChange.bind(this);
-        this.handleStateChange = this.handleStateChange.bind(this);
-        this.handleZipChange = this.handleZipChange.bind(this);
     }
 
-        handleNameChange = (event) => {
-            this.setState({ name : event.target.value })
-        };
-
-        handleAddressChange = (event) => {
-            this.setState({ address : event.target.value })
-        };
-
-        handleCityChange = (event) => {
-            this.setState({ city : event.target.value })
-        };
-
-        handleStateChange = (event) => {
-            this.setState({ state : event.target.value })
-        };
-
-        handleZipChange = (event) => {
-            this.setState({ zipcode : event.target.value })
-        };
-
     render() {
+
         return (
-            <div>Add New Listing
-                <form>
-                    Property Name: 
-                    <input type='text'
-                    value={this.state.name}
-                    onChange={this.handleNameChange} />
-                    
-                    Address: 
-                    <input type='text'
-                    value={this.state.address}
-                    onChange={this.handleAddressChange} />
+            //<Switch>
+            <div>
+                <Route component={StepOne} path='/wizard/step1' />
+                <Route component={StepTwo} path='/wizard/step2' />
+                <Route component={StepThree} path='/wizard/step3' />
 
-                    City: 
-                    <input type='text'
-                    value={this.state.cityj}
-                    onChange={this.handleCityChange} />
-
-                    State: 
-                    <input type='text'
-                    value={this.state.state}
-                    onChange={this.handleStateChange} />
-
-                    Zip Code: 
-                    <input type='number'
-                    value={this.state.zipcode}
-                    onChange={this.handleZipChange} />
-                </form> 
+                    <Link to='/'>
+                        <button >Cancel</button>
+                    </Link>
             </div>
+            //</Switch>
         )
     }
 }
