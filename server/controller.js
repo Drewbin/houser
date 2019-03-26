@@ -13,9 +13,9 @@ module.exports = {
 
     create : (req, res) => {
         const dbInstance = req.db;
-        const { name, address, city, state, zipcode } = req.body
+        const { name, address, city, state, zipcode, image, mortgage, rent } = req.body
 
-        dbInstance.create_property([ name, address, city, state, zipcode ]).then(() => {
+        dbInstance.create_property([ name, address, city, state, zipcode, image, mortgage, rent ]).then(() => {
             res.status(200).send('Product added')
         }).catch(err => {
             res.status(500).send('Failed to add property.')
@@ -35,7 +35,7 @@ module.exports = {
         })
     },
 
-    
+
 
 
 }
