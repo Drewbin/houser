@@ -11,102 +11,56 @@ const initialState = {
 
 }
 
-
-const UPDATE_NAME = 'UPDATE_NAME';
-const UPDATE_ADDRESS = 'UPDATE_ADDRESS';
-const UPDATE_CITY = 'UPDATE_CITY';
-const UPDATE_STATE = 'UPDATE_STATE';
-const UPDATE_ZIPCODE = 'UPDATE_ZIP';
+const UPDATE_INFO = 'UPDATE_INFO';
 const UPDATE_IMAGE = 'UPDATE_IMAGE';
-const UPDATE_MORTGAGE = 'UPDATE_MORTGAGE';
-const UPDATE_RENT = 'UPDATE_RENT';
+const UPDATE_PAYMENTS = 'UPDATE_PAYMENTS';
+const CLEAR_INFO = 'CLEAR_INFO';
 
+export default function reducer(state = initialState, action) {
+    let { type, payload } = action;
 
-function reducer(state = initialState, action) {
-    switch(action.type) {
+    switch(type) {
 
-        case UPDATE_NAME: 
-            return Object.assign( {}, { name: action.payload });
-
-        case UPDATE_ADDRESS:
-            return Object.assign( {}, { address: action.paylod });
-
-        case UPDATE_CITY: 
-            return Object.assign( {}, { city: action.payload });
-
-        case UPDATE_STATE: 
-            return Object.assign( {}, { state: action.payload });
-
-        case UPDATE_ZIPCODE: 
-            return Object.assign( {}, { zipcode: action.payload });
+        case UPDATE_INFO:
+            return { ...state, ...payload };
 
         case UPDATE_IMAGE:
-            return Object.assign( {}, { image: action.payload });
+            return { ...state, img : payload };
 
-        case UPDATE_MORTGAGE:
-            return Object.assign( {}, { mortgage: action.payload });
-
-        case UPDATE_RENT:
-            return Object.assign( {}, { rent: action.payload });
+        case UPDATE_PAYMENTS: 
+            return { ...state, ...payload };
+            
+        case CLEAR_INFO: 
+            return payload;
 
         default : return state;
     }
-}
+};
 
-export function updateName( name ) {
+export function updateInfo( info ) {
     return {
-        type: UPDATE_NAME,
-        payload: name,
+        type: UPDATE_INFO,
+        payload: info,
     }
-}
+};
 
-export function updateAddress( address ) {
-    return {
-        type: UPDATE_ADDRESS,
-        payload: address,
-    }
-}
-
-export function updateCity( city ) {
-    return {
-        type: UPDATE_CITY,
-        payload: city,
-    }
-}
-
-export function updateState( state ) {
-    return {
-        type: UPDATE_STATE,
-        payload: state,
-    }
-}
-
-export function updateZipcode( zipcode ) {
-    return {
-        type: UPDATE_ZIPCODE,
-        payload: zipcode,
-    }
-}
-
-export function updateImage( image ) {
+export function updateImage( img ) {
     return {
         type: UPDATE_IMAGE,
-        payload: image,
+        payload: img,
     }
-}
+};
 
-export function updateMortgage( mortgage ) {
+export function updatePayments( payments ) {
     return {
-        type: UPDATE_MORTGAGE,
-        payload: mortgage,
+        type: UPDATE_PAYMENTS,
+        payload: payments,
     }
-}
+};
 
-export function updateRent( rent ) {
+export function clear() {
     return {
-        type: UPDATE_RENT,
-        payload: rent,
+        type: CLEAR_INFO,
+        payload: initialState,
     }
-}
-
-export default reducer;
+};

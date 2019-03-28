@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
+import { HashRouter as Router } from 'react-router-dom';
 
 import Header from './component/Header/Header';
-import Routes from './routes';
+import routes from './routes';
 
 
 class App extends Component {
   render() {
     return (
-      <div> 
-        <Header />
-        {Routes}
+      <Router>
+        <div> 
+          <Header />
+          
+          {routes}
 
-      </div>
+        </div>
+      </Router>
     );
   }
 }

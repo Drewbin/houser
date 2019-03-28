@@ -1,50 +1,51 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { updatePayments, clear } from '../../ducks/reducer';
 
 
-export default class StepThree extends Component {
-    constructor() {
-        super()
+class StepThree extends Component {
+    constructor(props) {
+        super(props)
 
         this.state = {
             mortgage : 0,
             rent: 0,
+            recommended: 0,
         }
 
-        this.handleMortgageChange = this.handleMortgageChange.bind(this);
-        this.handleRentChange = this.handleRentChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.addProperty = this.addProperty.bind(this);
     }
 
-    handleMortgageChange = (event) => {
-        this.setState({ mortgage : event.target.value })
-    };
+    componentDidMount() {
+        const { mortgage, rent } = this.props
+        this.setState({ mortgage, rent })
+    }
 
-    handleRentChange = (event) => {
-        this.setState({ rent : event.target.value })
-    };
-
-    backToDashboard() {
-        let path = '/';
-        this.props.history.push(path)
+    handleChange(prop,value) {
+        if (prop === 'recommended') {
+            this.setState({
+                recommended : value * 1.25,
+            })
+        } else {
+            this.setState({
+                [prop] : value,
+            })
+        }
     }
 
     addProperty = (e) => {
         e.preventDefault();
 
-        const { name, address, city, state, zipcode, mortgage, rent } = this.state;
+        const { name, address, city, state, zipcode, image } = this.props;
+        const property = { name, address, city, state, zipcode, image, ...this.state }
 
-         axios.post('/api/property', {
-            name,
-            address,
-            city, 
-            state, 
-            zipcode,
-            mortgage,
-            rent,
-        }).then( () => {
-            this.props.history.push('/properties');
-            this.backToDashboard();                
+         axios.post( '/api/property', property ).then( res => {
+            this.props.clear();
+            this.props.history.push('/');
         })
     }
         
@@ -53,23 +54,35 @@ export default class StepThree extends Component {
 
         return (
             <div>
-                <h2>Add New Listing</h2>
-                Monthly Mortgage Amount: 
-                <input type='text'
-                value={this.state.mortgage}
-                onChange={this.handleMortgageChange} />
+                <div>
+                    <div>
+                        <p> Monthly Mortgage Amount </p>
+                        <input type='number'
+                        value={this.state.mortgage}
+                        onChange={ (e) => this.handleChange('mortgage', e.target.value)} />
 
-                Desired Monthly Rent: 
-                <input type='text'
-                value={this.state.rent}
-                onChange={this.handleRentChange} />
+                        <p> Desired Monthly Rent </p>
+                        <input type='text'
+                        value={this.state.rent}
+                        onChange={ (e) => this.handleChange('rent', e.target.value)} />
+                    </div>
+                </div>
 
-                <Link to='/wizard/step2'>
-                    <button >Previous Step</button>
-                </Link>
+                    <Link to='/wizard/step2'>
+                        <button onClick={ () => {
+                            this.props.updatePayments(this.state);
+                        }}> Previous Step </button>
+                    </Link>
 
-                <button onClick={this.addProperty} >Complete</button>
+                    <button onClick={this.addProperty} > Complete </button>
+
             </div>
         )
     }
 }
+
+function mapStateToProps(state) {
+    return state;
+}
+
+export default connect(mapStateToProps, { updatePayments, clear })(StepThree);

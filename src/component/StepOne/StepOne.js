@@ -1,119 +1,90 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-
-import { updateName, updateAddress, updateCity, updateState, updateZipcode } from '../../ducks/reducer'
 import { connect } from 'react-redux';
 
+import { updateInfo } from '../../ducks/reducer'
 
 class StepOne extends Component {
-    // constructor() {
-    //     super()
+    constructor(props) {
+        super(props)
 
-    //     this.state = {
-    //         name: '',
-    //         address: '',
-    //         city: '',
-    //         state: '',
-    //         zipcode: '',
-    //     }
+        this.state = {
+            name: '',
+            address: '',
+            city: '',
+            state: '',
+            zipcode: '',
+        }
+    }
 
-        
-
-    //     this.handleNameChange = this.handleNameChange.bind(this);
-    //     this.handleAddressChange = this.handleAddressChange.bind(this);
-    //     this.handleCityChange = this.handleCityChange.bind(this);
-    //     this.handleStateChange = this.handleStateChange.bind(this);
-    //     this.handleZipChange = this.handleZipChange.bind(this);
-    //     }
-
-    //     // handleChange = (e) => {
-    //     //     const updateProperty = ({
-    //     //         [e.target.name] : e.target.value,
-    //     //     });
-    //     //     this.props.updateProperty(updateProperty);
-    //     // }
-        
-    //     handleNameChange = (event) => {
-    //         this.setState({ name : event.target.value })
-    //     };
-
-    //     handleAddressChange = (event) => {
-    //         this.setState({ address : event.target.value })
-    //     };
-
-    //     handleCityChange = (event) => {
-    //         this.setState({ city : event.target.value })
-    //     };
-
-    //     handleStateChange = (event) => {
-    //         this.setState({ state : event.target.value })
-    //     };
-
-    //     handleZipChange = (event) => {
-    //         this.setState({ zipcode : event.target.value })
-    //     };
-
+    handleChange(prop, value) {
+        this.setState({
+            [prop]: value
+        });
+    }
 
     render() {
-
-        const {updateName, updateAddress, updateCity, updateState, updateZipcode } = this.props;
-
         return (
             <div>
-                <h2>Add New Listing</h2>
+                <div>
+                    
+                    <div>
+                        <p> Property Name </p>
+                        <input type='text'
+                        value={this.state.name}
+                        onChange={ (e) => this.handleChange('name', e.target.value)} />
+                    </div>
+
+                    <div>
+                        <p> Address </p>
+                        <input type='text'
+                        style={{ width: '33vw'}}
+                        value={this.state.address}
+                        onChange={ (e) => this.handleChange('address', e.target.value)} />
+                    </div>
+
+                    <div>
+                        <p> City </p>
+                        <input type='text'
+                        value={this.state.city}
+                        onChange={ (e) => this.handleChange('city', e.target.value)} />
+                    </div>
+
+                    <div>
+                        <p> State </p>
+                        <input type='text'
+                        style= {{ width: '70px' }}
+                        value={this.state.state}
+                        onChange={ (e) => this.handleChange('state', e.target.value)} />
+                    </div>
+
+                    <div>
+                        <p> Zip Code </p>
+                        <input type='number'
+                        style={{ width: '100px' }}
+                        value={this.state.zipcode}
+                        onChange={ (e) => this.handleChange('zipcode', e.target.value)} />
+                    </div>
+
+                </div>
                 
-                <form>
-                    
-                    Property Name: 
-                    <input type='text'
-                    value={this.props.name}
-                    onChange={ (e) => updateName( e.target.value )} />
-                    
-                    Address: 
-                    <input type='text'
-                    value={this.props.address}
-                    onChange={ (e) => updateAddress( e.target.value )} />
-
-                    City: 
-                    <input type='text'
-                    value={this.props.city}
-                    onChange={ (e) => updateCity( e.target.value )} />
-
-                    State: 
-                    <input type='text'
-                    value={this.props.state}
-                    onChange={ (e) => updateState( e.target.value )} />
-
-                    Zip Code: 
-                    <input type='number'
-                    value={this.props.zipcode}
-                    onChange={ (e) => updateZipcode( e.target.value )} />
-
-                    <Link to='/'>
-                        <button >Previous Step</button>
-                    </Link>
-
-                    <Link to='/wizard/step2'>
-                        <button >Next Step</button>
-                    </Link>
-
-                </form> 
-            
+                <button onClick={ () => {
+                    this.props.updateInfo(this.state);
+                    this.props.history.push('/wizard/step2')}} > Next Step </button>
             </div>
         )
     }
 }
 
-function mapStateToProps( state ) {
-    const {updateName, updateAddress, updateCity, updateState, updateZipcode } = state;
+function mapStateToProps( reduxState ) {
+    const {name, address, city, state, zipcode } = reduxState;
 
     return {
-        updateName, 
-        updateAddress, 
-        updateCity, 
-        updateState, 
-        updateZipcode,
+        name,
+        address,
+        city,
+        state, 
+        zipcode,
     }
 }
 
-export default connect( mapStateToProps, {updateName, updateAddress, updateCity, updateState, updateZipcode } )(StepOne);
+export default connect( mapStateToProps, { updateInfo } )(StepOne);

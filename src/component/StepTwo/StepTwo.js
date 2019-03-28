@@ -1,43 +1,62 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { updateImage } from '../../ducks/reducer';
 
 
-export default class StepTwo extends Component {
-    constructor() {
-        super()
+class StepTwo extends Component {
+    constructor(props) {
+        super(props)
 
         this.state = {
             image : '',
         }
 
-        this.handleImageChange = this.handleImageChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    handleImageChange = (event) => {
-        this.setState({ image : event.target.value })
-    };
+    handleChange(value) {
+        this.setState({ image : value })
+    }
 
+    componentDidMount() {
+        this.setState({ image: this.props.image})
+    }
 
     render() {
 
         return (
             <div>
-                <h2>Add New Listing</h2>
-                Image: 
-                <input type='text'
-                value={this.state.image}
-                onChange={this.handleImageChange} />
+                <div>
+                    <div> 
+                        <p> Image URL </p>
+                        <input type='text'
+                        style={{ width: '33vw' }}
+                        value={this.state.image}
+                        onChange={ (e) => this.handleChange( e.target.value )} />
+                    </div>
+                </div>
+                    <Link to='/wizard/step1'>
+                        <button onClick={ () => {
+                            this.props.updateImage(this.state.image);
+                        }}> Previous Step </button>
+                    </Link>
 
-                <Link to='/wizard/step1'>
-                    <button >Previous Step</button>
-                </Link>
-
-                <Link to='/wizard/step3'>
-                    <button >Next Step</button>
-                </Link>
-
-
+                    <Link to='/wizard/step3'>
+                        <button onClick={ () => {
+                            this.props.updateImage(this.state.image);
+                        }}> Next Step </button>
+                    </Link>
             </div>
         )
     }
 }
+
+function mapStateToProps(state) {
+    return{
+        image: state.image
+    }
+}
+
+export default connect(mapStateToProps, { updateImage })(StepTwo)

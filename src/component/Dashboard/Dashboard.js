@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import House from '../House/House';
 
 export default class Dashboard extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
             properties : [],
         }
-
-        this.deleteProperty = this.deleteProperty.bind(this);
     }
 
     showProperties() {
@@ -27,27 +24,26 @@ export default class Dashboard extends Component {
         this.showProperties();
     }
 
-    deleteProperty(id) {
+    deleteProperty = (id) => {
         axios.delete( `/api/property/${id}` ).then(res => {
             this.showProperties();
         });
     }
 
     render() {
-        const propList = this.state.properties.map((property, index) => (
-        <House property={property} key={index} deleteProperty={this.deleteProperty} />))
-
         return (
-            
             <div>
-                <p>Dashboard</p>
-                    <Link to='/wizard/step1'>
-                        <button type = 'button'>Add New Property</button>
-                    </Link>
-                    {propList}
+                <div>
+                    <h2> Dashboard </h2>
+                    <button onClick={ () => this.props.history.push('/wizard/step1') }> Add New Property </button>
+                </div>
+                <div>
+                    <h3> Home Listings </h3>
+                    {this.state.properties.map ( property => {
+                        return <House property={property} deleteProperty={this.deleteProperty} key={property.id} />
+                    })}
+                </div>
             </div>
-            
-            
-        )
+        );
     }
 }
