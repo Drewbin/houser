@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { updateImage } from '../../ducks/reducer';
+import { updateImage } from '../../../ducks/reducer';
 
 
 class StepTwo extends Component {
@@ -25,11 +25,15 @@ class StepTwo extends Component {
     }
 
     render() {
+        const buttonStyle = {
+            float: 'left',
+            margin: '33px 0 0 20px'
+        }
 
         return (
             <div>
-                <div>
-                    <div> 
+                <div className='wizard_container'>
+                    <div className='wizard_input_box'> 
                         <p> Image URL </p>
                         <input type='text'
                         style={{ width: '33vw' }}
@@ -37,17 +41,20 @@ class StepTwo extends Component {
                         onChange={ (e) => this.handleChange( e.target.value )} />
                     </div>
                 </div>
+                    <Link to='/wizard/step3'>
+                        <button className='wizard_button' onClick={ () => {
+                            this.props.updateImage(this.state.image);
+                        }}> Next Step </button>
+                    </Link>
+
                     <Link to='/wizard/step1'>
-                        <button onClick={ () => {
+                        <button className='wizard_button' style={buttonStyle}
+                            onClick={ () => {
                             this.props.updateImage(this.state.image);
                         }}> Previous Step </button>
                     </Link>
 
-                    <Link to='/wizard/step3'>
-                        <button onClick={ () => {
-                            this.props.updateImage(this.state.image);
-                        }}> Next Step </button>
-                    </Link>
+
             </div>
         )
     }

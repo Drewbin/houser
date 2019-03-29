@@ -1,0 +1,41 @@
+.Dashboard {
+    width: 50vw;
+    background-color: #E5F4EC;
+}
+
+.dashboard_header {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+        justify-content: space-between;
+}
+
+.dashboard_heading {
+    font-size: 40px;
+    color: #3B5429;
+    margin: 20px;
+}
+
+.dashboard_button {
+    margin: 20px;
+    background-color: #8AEA92;
+    border: none;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.dashboard_button:hover {
+    cursor: pointer;
+}
+
+.dashboard_container {
+    border-top: solid 1px black;
+    margin: 0 20px 10px;
+}
+
+.dashboard_container_heading {
+    margin: 20px;
+    font-size: 20px;
+    font-weight: 600;
+}

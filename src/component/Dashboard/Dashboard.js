@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import House from '../House/House';
+import './Dashboard.css'
 
 export default class Dashboard extends Component {
     constructor(props) {
@@ -32,13 +33,13 @@ export default class Dashboard extends Component {
 
     render() {
         return (
-            <div>
-                <div>
-                    <h2> Dashboard </h2>
-                    <button onClick={ () => this.props.history.push('/wizard/step1') }> Add New Property </button>
+            <div className='Dashboard'>
+                <div className='dashboard_header'>
+                    <h2 className='dashboard_heading' > Dashboard </h2>
+                    <button className='dashboard_button' onClick={ () => this.props.history.push('/wizard/step1') }> Add New Property </button>
                 </div>
-                <div>
-                    <h3> Home Listings </h3>
+                <div className='dashboard_container'>
+                    <h3 className='dashboard_container_heading'> Home Listings </h3>
                     {this.state.properties.map ( property => {
                         return <House property={property} deleteProperty={this.deleteProperty} key={property.id} />
                     })}

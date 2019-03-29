@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { updateInfo } from '../../ducks/reducer'
+import { updateInfo } from '../../../ducks/reducer'
+import '../Wizard.css'
 
 class StepOne extends Component {
     constructor(props) {
@@ -25,16 +26,17 @@ class StepOne extends Component {
     render() {
         return (
             <div>
-                <div>
+                <div className='wizard_container'>
                     
-                    <div>
+                    <div className='wizard_input_box'>
                         <p> Property Name </p>
                         <input type='text'
+                        style={{ width: '33vw' }}
                         value={this.state.name}
                         onChange={ (e) => this.handleChange('name', e.target.value)} />
                     </div>
 
-                    <div>
+                    <div className='wizard_input_box'>
                         <p> Address </p>
                         <input type='text'
                         style={{ width: '33vw'}}
@@ -42,14 +44,14 @@ class StepOne extends Component {
                         onChange={ (e) => this.handleChange('address', e.target.value)} />
                     </div>
 
-                    <div>
+                    <div className='wizard_input_box'>
                         <p> City </p>
                         <input type='text'
                         value={this.state.city}
                         onChange={ (e) => this.handleChange('city', e.target.value)} />
                     </div>
 
-                    <div>
+                    <div className='wizard_input_box'>
                         <p> State </p>
                         <input type='text'
                         style= {{ width: '70px' }}
@@ -57,7 +59,7 @@ class StepOne extends Component {
                         onChange={ (e) => this.handleChange('state', e.target.value)} />
                     </div>
 
-                    <div>
+                    <div className='wizard_input_box'>
                         <p> Zip Code </p>
                         <input type='number'
                         style={{ width: '100px' }}
@@ -67,7 +69,7 @@ class StepOne extends Component {
 
                 </div>
                 
-                <button onClick={ () => {
+                <button className='wizard_button' onClick={ () => {
                     this.props.updateInfo(this.state);
                     this.props.history.push('/wizard/step2')}} > Next Step </button>
             </div>
