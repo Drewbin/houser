@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { clear } from '../../ducks/reducer';
 
+import { clear } from '../../ducks/reducer';
 import StepOne from './StepOne/StepOne';
 import StepTwo from './StepTwo/StepTwo';
 import StepThree from './StepThree/StepThree';
@@ -22,9 +22,9 @@ function Wizard(props)  {
                         }}> Cancel </button>
         
             </div>
-                <Route component={StepOne} path='/wizard/step1' />
-                <Route component={StepTwo} path='/wizard/step2' />
-                <Route component={StepThree} path='/wizard/step3' />
+                <Route component={StepOne} path={props.match.path + '/step1'} />
+                <Route component={StepTwo} path={props.match.path + '/step2'} />
+                <Route component={StepThree} path={props.match.path + '/step3'} />
         
         </div>
     )
